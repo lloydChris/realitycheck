@@ -54,4 +54,4 @@ jobs:
           date
           echo 'Done sleeping.'
     environment:
-      SLEEP: 30
+      SLEEP: 8
