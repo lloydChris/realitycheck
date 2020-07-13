@@ -4,6 +4,10 @@ resource_job_defaults: &resource_job_defaults
   docker:  [{image: 'circleci/ruby:2.4.1'}]
   steps:
     - run:
+        name: check resource type
+        command: |
+          echo jp '.picard.resource_class.class'
+    - run:
         name: verify required Environment Variables
         command: |
           if [ -z "${CIRCLE_HOSTNAME}" -o -z "${CIRCLE_TOKEN}" ];then
@@ -19,26 +23,6 @@ resource_job_defaults: &resource_job_defaults
           "${CIRCLE_HOSTNAME%/}/api/v1.1/project/github/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/$CIRCLE_BUILD_NUM?\
           circle-token=$CIRCLE_TOKEN" | \
           jq '.picard.resource_class.class' | grep $CIRCLE_JOB
-
-remote_docker_defaults: &remote_docker_defaults
-  docker: [{image: 'docker:17.06-git'}]
-
-basic_docker_build: &basic_docker_build
-  name: "Build a really basic docker image"
-  command: |
-    dockerfile=Dockerfile
-    echo "FROM alpine:latest" > $dockerfile
-    echo "RUN echo hello" >> $dockerfile
-    docker build -f $dockerfile --tag throwaway:$CIRCLE_BUILD_NUM .
-    docker run --rm throwaway:$CIRCLE_BUILD_NUM
-
-contexts_defaults: &contexts_defaults
-  docker: [{image: 'alpine:latest'}]
-  working_directory: /a/contexts/test
-
-workspaces_defaults: &workspaces_defaults
-  docker: [{image: 'circleci/node:latest'}]
-  working_directory: ~/foo/bar
 
 jobs:
   # resource class jobs
@@ -205,24 +189,4 @@ workflows:
       - medium+
       - large
       - xlarge
-
-  vm_jobs:
-    jobs:
-      - machine
-      - remote_docker
-      - docker_layer_caching
-      - machine_dlc
-
-  feature_jobs:
-    jobs:
-      - save_and_restore_cache
-      - contexts:
-          context: org-global
-      - multi-contexts:
-          context: individual-local
-      - write_workspace
-      - read_workspace:
-          requires:
-            - write_workspace
-      - artifacts_test_results
 
