@@ -25,8 +25,8 @@ Tests the functionality  of the [`machine` executor](https://circleci.com/docs/2
 ## Features workflow
 - Tests ability to save and restore [caches](circleci.com/docs/2.0/caching)
 - Tests writing to and reading from [workspaces](https://circleci.com/docs/2.0/workflows/#using-workspaces-to-share-data-among-jobs)
-- Tests the default `org-global` [context](https://circleci.com/docs/2.0/contexts) (*NOTE:* needs a key called `CONTEXT_END_TO_END_TEST_VAR` to exist in a context called `org-global`) 
-- Tests multiple contexts (*NOTE:* needs a key called `MULTI_CONTEXT_END_TO_END_VAR` to exist in a context called `individual-local`)
+- Tests the default `org-global-cj` [context](https://circleci.com/docs/2.0/contexts) (*NOTE:* needs a key called `CONTEXT_END_TO_END_TEST_VAR` to exist in a context called `org-global-cj`) 
+- Tests multiple contexts (*NOTE:* needs a key called `MULTI_CONTEXT_END_TO_END_VAR` to exist in a context called `individual-local-cj`)
 - Tests upload/storage of [artifacts](https://circleci.com/docs/2.0/artifacts) and [test results](https://circleci.com/docs/2.0/collect-test-data)
 
 ### Prerequisites
@@ -34,8 +34,8 @@ You will need to configure the following contexts and keys (their values can be 
 
 Context Name     | Key Name                       
 -----------------|-----------------------------
-org-global       | CONTEXT_END_TO_END_TEST_VAR
-individual-local | MULTI_CONTEXT_END_TO_END_VAR
+org-global-cj       | CONTEXT_END_TO_END_TEST_VAR
+individual-local-cj | MULTI_CONTEXT_END_TO_END_VAR
 
 
 ## Contributing
